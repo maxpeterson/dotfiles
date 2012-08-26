@@ -1,6 +1,6 @@
 Dot files!
 
-== Installation
+## Installation
 
 Create soft links to the files from your home directory.
 
