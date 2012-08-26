@@ -1,0 +1,14 @@
+*.pyc
+*.swp
+.Python
+.DS_Store
+.sass-cache
+_latest
+*.egg-info
+.vagrant
+package.box
+dist
+_jpgs
+_docs
+MANIFEST
+.ropeproject

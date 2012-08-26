@@ -1,0 +1,13 @@
+syntax: glob
+*.pyc
+*.swp
+*.egg-info
+.sass-cache
+.Python
+.DS_Store
+_latest
+*.egg-info
+.vagrant
+package.box
+dist
+MANIFEST

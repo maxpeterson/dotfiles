@@ -1,0 +1,35 @@
+[auth]
+incuna.prefix = incuna@bitbucket.org
+bitbucket.username = incuna
+bitbucket.schemes = http https
+
+#bitbucket.prefix = bitbucket.org
+#bitbucket.username = maxpeterson
+#bitbucket.schemes = http https
+
+
+
+[ui]
+username=Max Peterson <max@incuna.com> 
+editor = vim
+ignore=~/.hgignore
+
+[extensions]
+#hgext.convert=
+#hgsubversion = ~/src/hgsubversion/hgsubversion
+#fetch=
+# allows customisation of PS1
+prompt = ~/src/hg-prompt/prompt.py
+#hgshelve = ~/src/hgshelve/hgshelve.py
+#progress =
+
+color =
+ 
+# COLOURS!
+[color]
+status.added = blue
+status.deleted = cyan
+status.modified = green
+status.removed = red
+status.unknown = magenta
+

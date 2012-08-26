@@ -1,0 +1,49 @@
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore_global
+
+[user]
+    name = "Max Peterson"
+    email = max@incuna.com
+
+[alias]
+    d = diff
+    dc = cached
+    ld = log ORIG_HEAD.. --stat --no-merges
+    mnff = merge --no-ff
+    st = status
+    s = status
+    ci = commit
+    co = checkout
+    update = checkout
+    up = checkout
+
+[help]
+    autocorrect = 1
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[status]
+    relativePaths = false
+
+[github]
+    user = maxpeterson
+    name = Max Peterson
+    email = max@incuna.com
