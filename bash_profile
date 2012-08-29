@@ -1,7 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-echo "start .bash_profile"
+#echo "start .bash_profile"
 
 [[ -s ~/.bashrc ]] && . ~/.bashrc
 
@@ -98,9 +98,9 @@ unset color_prompt force_color_prompt
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    echo "source ~/.bash_aliases" 
+    #echo "source ~/.bash_aliases" 
     . ~/.bash_aliases
-    echo "done ~/.bash_aliases" 
+    #echo "done ~/.bash_aliases" 
 fi
 
 # enable color support of ls and also add handy aliases
@@ -122,9 +122,9 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 else
     if [ -f `brew --prefix`/etc/bash_completion ]; then
-        echo "source `brew --prefix`/etc/bash_completion" 
+        #echo "source `brew --prefix`/etc/bash_completion" 
         . `brew --prefix`/etc/bash_completion
-        echo "done `brew --prefix`/etc/bash_completion" 
+        #echo "done `brew --prefix`/etc/bash_completion" 
     fi
 fi
 
@@ -144,8 +144,8 @@ alias solr='solr $SOLR_CONF'
 
 # Virtualenvwrapper
 export WORKON_HOME=~/Envs
-echo "source /usr/local/bin/virtualenvwrapper.sh" 
+#echo "source /usr/local/bin/virtualenvwrapper.sh" 
 source /usr/local/bin/virtualenvwrapper.sh
-echo "done /usr/local/bin/virtualenvwrapper.sh" 
-echo "done .bash_profile"
+#echo "done /usr/local/bin/virtualenvwrapper.sh" 
+#echo "done .bash_profile"
 
