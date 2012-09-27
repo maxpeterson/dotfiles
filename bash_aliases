@@ -6,6 +6,9 @@ alias l='less'
 alias h='history'
 alias n='mvim'
 alias mvimr='mvim --remote'
+alias pu=pushd
+alias po=popd
+
 
 alias git=hub
 
