@@ -13,7 +13,7 @@ alias po=popd
 alias git=hub
 
 # Django
-alias pm='python manage.py'
+alias pm='python $([ -e manage.py ] && echo manage.py || echo */manage.py)'
 alias pmr='pm runserver_plus'
 alias pms='pm shell_plus'
 
@@ -21,6 +21,9 @@ alias pms='pm shell_plus'
 alias sshtunnel='ssh incuna@dev.incuna.com -L 9432:localhost:5432'
 # Update DATABASE_URL to use 127.0.0.1:9432
 alias dbtunnel='export DATABASE_URL=$(echo $DATABASE_URL|sed -e "s/192.168.0.2/127.0.0.1:9432/")'
+
+# Set up AFP tunnel to Sultan (for finder)
+alias afptunnel='ssh incuna@dev.incuna.com -L 5480:localhost:548 -N -f && open afp://incuna@127.0.0.1:5480/incuna-clients'
 
 # Git utils 
 function git-authors {
