@@ -62,11 +62,6 @@ function hg_prompt() {
     hg prompt " ({branch}){status}" 2> /dev/null
 }
 
-function git_branch {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    echo " ("${ref#refs/heads/}")"
-}
-
 function svn_revision {
     svn info  2> /dev/null | grep Revision: | sed -e 's/Revision: \(.*\)/ (\1)/'
 }
@@ -75,8 +70,11 @@ if [ "$color_prompt" = yes ]; then
     GREEN="\[\033[0;32m\]"
     WHITE="\[\033[0;37m\]"
     YELLOW="\[\033[0;33m\]"
+
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWSTASHSTATE=1
     
-    PS1="${debian_chroot:+($debian_chroot)}$GREEN\u@\h:$WHITE\W$YELLOW\$(git_branch)$YELLOW\$(hg_prompt)$YELLOW\$(svn_revision)$WHITE\$ "
+    PS1="${debian_chroot:+($debian_chroot)}$GREEN\u@\h:$WHITE\W$YELLOW\$(__git_ps1)$YELLOW\$(hg_prompt)$YELLOW\$(svn_revision)$WHITE\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 fi
