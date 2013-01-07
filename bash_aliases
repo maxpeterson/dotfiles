@@ -25,6 +25,9 @@ alias dbtunnel='export DATABASE_URL=$(echo $DATABASE_URL|sed -e "s/192.168.0.2/1
 # Set up AFP tunnel to Sultan (for finder)
 alias afptunnel='ssh incuna@dev.incuna.com -L 5480:localhost:548 -N -f && open afp://incuna@127.0.0.1:5480/incuna-clients'
 
+alias junglediskload='sudo launchctl load -w /Library/LaunchDaemons/com.jungledisk.service.plist'
+alias junglediskunload='sudo launchctl unload -w /Library/LaunchDaemons/com.jungledisk.service.plist'
+
 # Git utils 
 function git-authors {
     git log --format='%aN' | sort -u
