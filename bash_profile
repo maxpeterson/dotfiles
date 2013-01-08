@@ -128,10 +128,6 @@ fi
 
 export EDITOR=/usr/bin/vim
 
-
-export AWS_ACCESS_KEY_ID='AKIAIPUEFCR5SCOWB3VA'
-export AWS_SECRET_ACCESS_KEY='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'
-
 # For PIP
 #export PIP_REQUIRE_VIRTUALENV=true
 export ARCHFLAGS="-arch i386 -arch x86_64"
@@ -149,5 +145,12 @@ export WORKON_HOME=~/Envs
 #echo "source /usr/local/bin/virtualenvwrapper.sh" 
 source /usr/local/bin/virtualenvwrapper_lazy.sh
 #echo "done /usr/local/bin/virtualenvwrapper.sh" 
+
+if [ -f ~/.bash_profile_local ]; then
+    . ~/.bash_profile_local
+fi
+
 #echo "done .bash_profile"
+
+
 
