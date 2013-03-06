@@ -23,7 +23,7 @@ alias sshtunnel='ssh incuna@dev.incuna.com -L 9432:localhost:5432'
 alias dbtunnel='export DATABASE_URL=$(echo $DATABASE_URL|sed -e "s/192.168.0.2/127.0.0.1:9432/")'
 
 # Set up AFP tunnel to Sultan (for finder)
-alias afptunnel='ssh incuna@dev.incuna.com -L 5480:localhost:548 -N -f && open afp://incuna@127.0.0.1:5480/incuna-clients'
+alias afptunnel='ssh incuna@dev.incuna.com -L 5480:192.168.0.3:548 -N -f && open afp://incuna@127.0.0.1:5480/Clients'
 
 alias junglediskload='sudo launchctl load -w /Library/LaunchDaemons/com.jungledisk.service.plist'
 alias junglediskunload='sudo launchctl unload -w /Library/LaunchDaemons/com.jungledisk.service.plist'
