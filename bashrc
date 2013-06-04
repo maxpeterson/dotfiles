@@ -4,7 +4,7 @@
 
 #export PATH=~/bin:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:$PATH
 #echo "start .bashrc"
-export PATH=~/bin:~/scripts:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=~/bin:~/scripts:/Applications/Postgres.app/Contents/MacOS/bin:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:/usr/local/bin:$PATH
 export NODE_PATH=$(npm root -g)
 
 export CATALINA_HOME=/usr/local/tomcat6

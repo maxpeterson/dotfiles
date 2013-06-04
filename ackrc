@@ -5,7 +5,10 @@
 --type-set=sass=.sass,.scss
 --type-set=json=.json
 --type-set=txt=.txt
+--type-set=jsp=.jsp
 --type-set=jspf=.jspf
+--type-set=hbs=.hbs
+--type-set=coffee=.coffee
 --type-set=tag=.tag
 --type-set=rst=.rst
 --ignore-dir=migrations

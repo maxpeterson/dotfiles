@@ -47,3 +47,5 @@
     user = maxpeterson
     name = Max Peterson
     email = max@incuna.com
+[heroku]
+	account = personal
