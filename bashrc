@@ -8,7 +8,5 @@ export PATH=~/bin:~/scripts:/Applications/Postgres.app/Contents/MacOS/bin:/usr/l
 export NODE_PATH=$(npm root -g)
 
 export CATALINA_HOME=/usr/local/tomcat6
-export JAVA_HOME=/usr
+export JAVA_HOME=$(/usr/libexec/java_home)
 #echo "end .bashrc"
-
-

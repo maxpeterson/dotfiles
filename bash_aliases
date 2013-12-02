@@ -25,6 +25,9 @@ alias dbtunnel='export DATABASE_URL=$(echo $DATABASE_URL|sed -e "s/192.168.0.2/1
 # Set up AFP tunnel to Sultan (for finder)
 alias afptunnel='ssh incuna@dev.incuna.com -L 5480:192.168.0.3:548 -N -f && open afp://incuna@127.0.0.1:5480/Clients'
 
+# Set env using hoard
+alias setenv='$(hoard get | sed s/^/export\ /)'
+
 alias junglediskload='sudo launchctl load -w /Library/LaunchDaemons/com.jungledisk.service.plist'
 alias junglediskunload='sudo launchctl unload -w /Library/LaunchDaemons/com.jungledisk.service.plist'
 
@@ -246,6 +249,32 @@ function key-share {
 
     cat ~/.ssh/id_rsa.pub | ssh ${host} 'cat - >> ~/.ssh/authorized_keys'
 }
+
+function update-keys {
+    usage="Usage update-keys [key_file] [user]@[host1] ...";
+    if [ "${1}" == "" ] ; then
+        echo "File not specified"; 
+        echo ${usage}; 
+        return 1
+    fi
+    key_file=${1}; shift;
+    
+    if [ "${1}" == "" ] ; then
+        echo "Host not specified"; 
+        echo $usage; 
+        return 1
+    fi
+
+    for host in $@; do 
+        echo "${host}" | grep -q "@"
+        if [ $? == 1 ] ; then
+            host="incuna@${host}"
+        fi
+        echo "${key_file} | ssh ${host} 'cat - > ~/.ssh/authorized_keys'"
+        cat ${key_file} | ssh ${host} 'cat - > ~/.ssh/authorized_keys'
+    done
+}
+
 
 function release {
     user=${1:-incuna}
