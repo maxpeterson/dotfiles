@@ -309,3 +309,20 @@ djvim() {
      mvim "+cd $1" "+TlistAddFilesRecursive . [^_]*py\|*js\|*html\|*css" +TlistOpen
 }
 
+changelog() {
+    last=''
+    first=$(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
+    
+    while read first; do
+        while read tag; do
+            if [ "$last" != "" ]; then
+                echo
+                echo "## $tag"
+                echo
+                git log "$last...$tag" --pretty=format:"* %s" --reverse | grep -v Merge;
+            fi
+            last=$tag
+        done < <(git tag | grep "^$first" | sort -r -t . -k 2 -n )
+    done < <(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
+}
+
