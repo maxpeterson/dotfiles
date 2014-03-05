@@ -49,3 +49,5 @@
     email = max@incuna.com
 [heroku]
 	account = personal
+[push]
+	default = simple
