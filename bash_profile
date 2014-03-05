@@ -67,6 +67,7 @@ function svn_revision {
 }
 
 if [ "$color_prompt" = yes ]; then
+    source ~/.git-prompt.sh
     GREEN="\[\033[0;32m\]"
     WHITE="\[\033[0;37m\]"
     YELLOW="\[\033[0;33m\]"
@@ -119,10 +120,8 @@ fi
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 else
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-        #echo "source `brew --prefix`/etc/bash_completion" 
-        . `brew --prefix`/etc/bash_completion
-        #echo "done `brew --prefix`/etc/bash_completion" 
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
     fi
 fi
 
