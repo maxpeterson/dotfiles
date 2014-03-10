@@ -13,3 +13,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+export PATH="/usr/local/Cellar/ruby/2.1.1/bin/:$PATH"
+

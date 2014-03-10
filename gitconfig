@@ -48,6 +48,6 @@
     name = Max Peterson
     email = max@incuna.com
 [heroku]
-	account = personal
+	account = incuna
 [push]
 	default = simple

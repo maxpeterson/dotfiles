@@ -234,6 +234,17 @@ alias activate='source bin/activate'
 alias virtualenvactivate='(virtualenv --no-site-packages .) && activate'
 alias activatebuildout='virtualenvactivate && (bin/python bootstrap.py) && (bin/buildout -N)'
 
+function rebuildvirtualenv {
+    project=${1}
+    python=${2:-$(which python)}
+    workon ${project}
+    deactivate
+    rmvirtualenv ${project}
+    mkvirtualenv ${project} --python=${python}
+    setvirtualenvproject
+    pip install -r requirements.txt
+}
+
 function key-share {
     if [ "${1}" == "" ] ; then
         echo "Host not specified"; 
