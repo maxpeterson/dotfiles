@@ -141,6 +141,7 @@ alias solr='solr $SOLR_CONF'
 
 # Virtualenvwrapper
 export WORKON_HOME=~/Envs
+export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/dotfiles/virtualenvwrapper"
 #echo "source /usr/local/bin/virtualenvwrapper.sh" 
 source /usr/local/bin/virtualenvwrapper_lazy.sh
 #echo "done /usr/local/bin/virtualenvwrapper.sh" 

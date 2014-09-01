@@ -1,0 +1,16 @@
+#!/bin/bash
+# This hook is run after every virtualenv is activated.
+
+# set the environment based on hoard
+if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
+    typeset project_dir="$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")";
+    if [ ! -z "$project_dir" ]; then
+        hoard_file="$project_dir/.hoard";
+        if [ ! -z "$hoard_file" ]; then
+            typeset hoard_project="$(grep 'project=' $hoard_file | sed -e 's/^project=//')";
+            if [ "$hoard_project" != "" ]; then
+                $(hoard get --project $hoard_project | sed s/^/export\ /);
+            fi
+        fi
+    fi
+fi
