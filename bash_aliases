@@ -322,18 +322,14 @@ djvim() {
 
 changelog() {
     last=''
-    first=$(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
-    
-    while read first; do
+    while IFS= read -r first; do
         while read tag; do
-            if [ "$last" != "" ]; then
-                echo
-                echo "## $tag"
-                echo
-                git log "$last...$tag" --pretty=format:"* %s" --reverse | grep -v Merge;
-            fi
+            echo
+            echo "## ${last:-CURRENT}"
+            echo
+            git log "$last...$tag" --pretty=format:"* %s" --reverse | grep -v Merge;
             last=$tag
-        done < <(git tag | grep "^$first" | sort -r -t . -k 2 -n )
+        done < <(git tag | grep "^$first" | sort -r -t . -k 2 -n)
     done < <(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
 }
 
