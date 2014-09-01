@@ -13,4 +13,6 @@ _docs
 MANIFEST
 .ropeproject
 static_media
+client_media
 doc/tags
+.coverage
