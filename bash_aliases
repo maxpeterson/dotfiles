@@ -31,6 +31,8 @@ alias setenv='$(hoard get | sed s/^/export\ /)'
 alias junglediskload='sudo launchctl load -w /Library/LaunchDaemons/com.jungledisk.service.plist'
 alias junglediskunload='sudo launchctl unload -w /Library/LaunchDaemons/com.jungledisk.service.plist'
 
+alias builddocx='for file in docs/src/*.md; do pandoc -s -S $file -o docs/docx/$(basename ${file%%.*}).docx; done'
+
 # Git utils 
 function git-authors {
     git log --format='%aN' | sort -u
