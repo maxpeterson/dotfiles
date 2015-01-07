@@ -7,7 +7,7 @@ if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
     if [ ! -z "$project_dir" ]; then
         hoard_file="$project_dir/.hoard";
         if [ -e "$hoard_file" ]; then
-            typeset hoard_project="$(grep 'project=' $hoard_file | sed -e 's/^project=//')";
+            typeset hoard_project="$(grep 'project *=' $hoard_file | sed -e 's/^project *= *//')";
             if [ ! -z "$hoard_project"  ]; then
                 $(hoard get --project $hoard_project | sed s/^/export\ /);
             else
