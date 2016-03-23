@@ -16,4 +16,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # Required to fix compile error following Xcode upgrade to 5.1
 # clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
 export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
+export CPPFLAGS="-Qunused-arguments -I/usr/local/opt/zlib/include"
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export LIBMEMCACHED=/usr/local
