@@ -67,7 +67,14 @@ function svn_revision {
 }
 
 if [ "$color_prompt" = yes ]; then
-    source ~/.git-prompt.sh
+    git_root=$(brew --prefix git)
+    if [ -f "$git_root/etc/bash_completion.d/git-completion.bash" ]; then
+        . "$git_root//etc/bash_completion.d/git-completion.bash"
+    fi
+    if [ -f "$git_root/etc/bash_completion.d/git-prompt.sh" ]; then
+        . "$git_root/etc/bash_completion.d/git-prompt.sh"
+    fi
+
     GREEN="\[\033[0;32m\]"
     WHITE="\[\033[0;37m\]"
     YELLOW="\[\033[0;33m\]"
@@ -157,10 +164,15 @@ fi
 
 # Setting PATH for Python 3.4
 # The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-export PATH
+#PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
+#export PATH
 
 # Setting PATH for Python 3.5
 # The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
-export PATH
+#PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
+#export PATH
+
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"

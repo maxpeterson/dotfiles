@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=~/bin:~/scripts:/Applications/Postgres.app/Contents/Versions/9.3/bin:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=~/bin:~/scripts:/Applications/Postgres.app/Contents/Versions/latest/bin:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:/usr/local/bin:$PATH
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # Setup rbenv
@@ -19,3 +19,7 @@ export CFLAGS=-Qunused-arguments
 export CPPFLAGS="-Qunused-arguments -I/usr/local/opt/zlib/include"
 export LDFLAGS="-L/usr/local/opt/zlib/lib"
 export LIBMEMCACHED=/usr/local
+
+
+export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
+

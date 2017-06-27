@@ -12,6 +12,10 @@ alias po=popd
 
 alias git=hub
 
+function ssftp {
+    (unset SSH_AUTH_SOCK; sftp $@)
+}
+
 # Django
 alias pm='python $([ -e manage.py ] && echo manage.py || echo */manage.py)'
 alias pmr='pm runserver_plus'
@@ -247,6 +251,10 @@ function rebuildvirtualenv {
     pip install -r requirements.txt
 }
 
+alias mkvirtualenv3_5='mkvirtualenv $(basename $(pwd)) --python=$(which python3.5)'
+
+alias workon.='workon $(basename $(pwd))'
+
 function key-share {
     if [ "${1}" == "" ] ; then
         echo "Host not specified"; 
@@ -334,4 +342,7 @@ changelog() {
         done < <(git tag | grep "^$first" | sort -r -t . -k 2 -n)
     done < <(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
 }
+
+# Convert file to utf8 using vim
+alias utf8='vim +"set nobomb | set fenc=utf8 | x"'
 
