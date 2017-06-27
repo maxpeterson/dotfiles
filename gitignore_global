@@ -1,3 +1,4 @@
+env.sh
 *.pyc
 *.swp
 .Python
@@ -7,7 +8,6 @@ _latest
 *.egg-info
 .vagrant
 package.box
-dist
 _jpgs
 _docs
 MANIFEST
@@ -16,3 +16,4 @@ static_media
 client_media
 doc/tags
 .coverage
+.svn
