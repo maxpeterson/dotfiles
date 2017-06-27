@@ -1,27 +1,17 @@
 #!/bin/bash
 # This hook is run after every virtualenv is activated.
 
-# set the project environment based on hoard
+# set the project environment based on folder
 if [ -f "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME" ]; then
     typeset project_dir="$(cat "$VIRTUAL_ENV/$VIRTUALENVWRAPPER_PROJECT_FILENAME")";
     if [ ! -z "$project_dir" ]; then
-        hoard_file="$project_dir/.hoard";
-        if [ -e "$hoard_file" ]; then
-            typeset hoard_project="$(grep 'project *=' $hoard_file | sed -e 's/^project *= *//')";
-            if [ ! -z "$hoard_project"  ]; then
-                $(hoard get --project $hoard_project | sed s/^/export\ /);
-            else
-                echo "No hoard project set in $hoard_file";
-            fi
+        # Legacy projects may have a env.sh file
+        env_file="$project_dir/env.sh";
+        if [ -e "$env_file" ]; then
+            source "$env_file";
         else
-            # Legacy projects may have a env.sh file
-            env_file="$project_dir/env.sh";
-            if [ -e "$env_file" ]; then
-                source "$env_file";
-            else
-                echo "No project environment. Setting DEBUG=1";
-                export DEBUG=1;
-            fi
+            echo "No project environment. Setting DEBUG=1";
+            export DEBUG=1;
         fi
     fi
 fi
