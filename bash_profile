@@ -1,13 +1,21 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-#echo "start .bash_profile"
+
+debug_bash_on=0
+function debug_bash() {
+    if [ "$debug_bash_on" = 1 ] ; then  
+        echo "$(date "+%s.%N") - $@";
+    fi
+}
+
+debug_bash "start .bash_profile"
 
 [[ -s ~/.bashrc ]] && . ~/.bashrc
 
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
@@ -57,15 +65,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-
-function hg_prompt() {
-    hg prompt " ({branch}){status}" 2> /dev/null
-}
-
-function svn_revision {
-    svn info  2> /dev/null | grep Revision: | sed -e 's/Revision: \(.*\)/ (\1)/'
-}
-
 if [ "$color_prompt" = yes ]; then
     git_root=$(brew --prefix git)
     if [ -f "$git_root/etc/bash_completion.d/git-completion.bash" ]; then
@@ -82,7 +81,7 @@ if [ "$color_prompt" = yes ]; then
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWSTASHSTATE=1
     
-    PS1="${debian_chroot:+($debian_chroot)}$GREEN\u@\h:$WHITE\W$YELLOW\$(__git_ps1)$YELLOW\$(hg_prompt)$YELLOW\$(svn_revision)$WHITE\$ "
+    PS1="${debian_chroot:+($debian_chroot)}$GREEN\u@\h:$WHITE\W$YELLOW\$(__git_ps1)$WHITE\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 fi
@@ -104,9 +103,9 @@ unset color_prompt force_color_prompt
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    #echo "source ~/.bash_aliases" 
+    debug_bash "source ~/.bash_aliases"
     . ~/.bash_aliases
-    #echo "done ~/.bash_aliases" 
+    debug_bash "done ~/.bash_aliases"
 fi
 
 # enable color support of ls and also add handy aliases
@@ -121,14 +120,20 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ]; then
+    debug_bash "source /etc/bash_completion"
     . /etc/bash_completion
+    debug_bash "done /etc/bash_completion"
 else
-    if [ -f $(brew --prefix)/etc/bash_completion ]; then
-        . $(brew --prefix)/etc/bash_completion
+    brew_prefix=$(brew --prefix)
+    if [ -f "${brew_prefix}/etc/profile.d/bash_completion.sh" ]; then
+        debug_bash "source ${brew_prefix}/etc/profile.d/bash_completion.sh"
+        . "${brew_prefix}/etc/profile.d/bash_completion.sh"
+        debug_bash "done ${brew_prefix}/etc/profile.d/bash_completion.sh"
     fi
 fi
 
@@ -139,40 +144,37 @@ export EDITOR=/usr/bin/vim
 export ARCHFLAGS="-arch i386 -arch x86_64"
 
 # Load RVM function
+debug_bash "source $HOME/.rvm/scripts/rvm"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+debug_bash "done $HOME/.rvm/scripts/rvm"
 
 #Solr
-export SOLR_CONF=`brew --prefix solr`/libexec/example/solr/
-export SOLR_SCHEMA=`brew --prefix solr`/libexec/example/solr/conf/schema.xml
+solr_prefix=$(brew --prefix solr)
+export SOLR_CONF=${solr_prefix}/libexec/example/solr/
+export SOLR_SCHEMA=${solr_prefix}/libexec/example/solr/conf/schema.xml
 alias solr='solr $SOLR_CONF'
 
 # Virtualenvwrapper
 export WORKON_HOME=~/Envs
-export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/dotfiles/virtualenvwrapper"
-#echo "source /usr/local/bin/virtualenvwrapper.sh" 
+#export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/dotfiles/virtualenvwrapper"
+debug_bash "source /usr/local/bin/virtualenvwrapper.sh"
 source /usr/local/bin/virtualenvwrapper_lazy.sh
-#echo "done /usr/local/bin/virtualenvwrapper.sh" 
+debug_bash "done /usr/local/bin/virtualenvwrapper.sh"
 
 if [ -f ~/.bash_profile_local ]; then
+    debug_bash "source ~/.bash_profile_local"
     . ~/.bash_profile_local
+    debug_bash "done ~/.bash_profile_local"
 fi
 
-#echo "done .bash_profile"
-
-
-
-
-# Setting PATH for Python 3.4
-# The orginal version is saved in .bash_profile.pysave
-#PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-#export PATH
-
-# Setting PATH for Python 3.5
-# The orginal version is saved in .bash_profile.pysave
-#PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
-#export PATH
-
 export NVM_DIR=~/.nvm
+debug_bash "source nvm.sh"
 . $(brew --prefix nvm)/nvm.sh
+debug_bash "done nvm.sh"
 
+debug_bash "source ${HOME}/.iterm2_shell_integration.bash"
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+debug_bash "done ${HOME}/.iterm2_shell_integration.bash"
+
+
+debug_bash "done .bash_profile"
