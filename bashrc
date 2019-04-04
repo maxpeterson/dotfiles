@@ -2,8 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=~/bin:~/scripts:/Applications/Postgres.app/Contents/Versions/latest/bin:/usr/local/mysql/bin:/usr/local/ant-1.8/bin:/usr/local/sbin:/usr/local/bin:$PATH
-export PATH="/usr/local/heroku/bin:$PATH"
+export PATH=/usr/local/opt/python/libexec/bin/:$PATH
+export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=/usr/local/heroku/bin:$PATH
+export PATH=~/bin:~/scripts:$PATH
 
 # Setup rbenv
 eval "$(rbenv init -)"

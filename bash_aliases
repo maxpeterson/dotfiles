@@ -66,9 +66,6 @@ else
 fi
 }
 
-
-alias dist-packages='cd /usr/local/lib/python2.6/dist-packages/'
-
 function svnaddall
 {
 svn status $@ | egrep '^\?' | sed -e 's/^\?\s*//' | xargs svn add
@@ -246,12 +243,19 @@ function rebuildvirtualenv {
     workon ${project}
     deactivate
     rmvirtualenv ${project}
-    mkvirtualenv ${project} --python=${python}
+    mkvirtualenvv ${python} ${project}
     setvirtualenvproject
     pip install -r requirements.txt
 }
 
-alias mkvirtualenv3_5='mkvirtualenv $(basename $(pwd)) --python=$(which python3.5)'
+function mkvirtualenvv {
+    python=${1:-python}
+    name=${2:-$(basename $(pwd))}
+    mkvirtualenv ${name} --python=$(which ${python})
+    setvirtualenvproject
+}
+
+alias mkvirtualenv3='mkvirtualenvv python3'
 
 alias workon.='workon $(basename $(pwd))'
 
@@ -346,3 +350,4 @@ changelog() {
 # Convert file to utf8 using vim
 alias utf8='vim +"set nobomb | set fenc=utf8 | x"'
 
+alias password='base64 < /dev/random | tr -dc _a-z-0-9 | head -c24'
