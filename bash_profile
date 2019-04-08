@@ -143,10 +143,10 @@ export EDITOR=/usr/bin/vim
 #export PIP_REQUIRE_VIRTUALENV=true
 export ARCHFLAGS="-arch i386 -arch x86_64"
 
-# Load RVM function
-debug_bash "source $HOME/.rvm/scripts/rvm"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-debug_bash "done $HOME/.rvm/scripts/rvm"
+# Setup rbenv
+debug_bash "start rbenv init"
+eval "$(rbenv init -)"
+debug_bash "done rbenv init"
 
 #Solr
 solr_prefix=$(brew --prefix solr)
@@ -172,9 +172,10 @@ debug_bash "source nvm.sh"
 . $(brew --prefix nvm)/nvm.sh
 debug_bash "done nvm.sh"
 
-debug_bash "source ${HOME}/.iterm2_shell_integration.bash"
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-debug_bash "done ${HOME}/.iterm2_shell_integration.bash"
-
+if [ -f "${HOME}/.iterm2_shell_integration.bash" ]; then
+    debug_bash "source ${HOME}/.iterm2_shell_integration.bash"
+    source "${HOME}/.iterm2_shell_integration.bash"
+    debug_bash "done ${HOME}/.iterm2_shell_integration.bash"
+fi
 
 debug_bash "done .bash_profile"

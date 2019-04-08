@@ -8,11 +8,6 @@ export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=/usr/local/heroku/bin:$PATH
 export PATH=~/bin:~/scripts:$PATH
 
-# Setup rbenv
-eval "$(rbenv init -)"
-
-export NODE_PATH=$(npm root -g)
-
 #export CATALINA_HOME=/usr/local/tomcat6
 export JAVA_HOME=$(/usr/libexec/java_home)
 
