@@ -13,3 +13,4 @@
 --type-set=rst=.rst
 --ignore-dir=migrations
 --ignore-dir=projectmigrations
+--ignore-dir=node_modules

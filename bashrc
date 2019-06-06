@@ -18,6 +18,5 @@ export CPPFLAGS="-Qunused-arguments -I/usr/local/opt/zlib/include"
 export LDFLAGS="-L/usr/local/opt/zlib/lib"
 export LIBMEMCACHED=/usr/local
 
-
 export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
 
