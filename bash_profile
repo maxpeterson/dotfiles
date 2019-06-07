@@ -182,8 +182,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
     # Using pyvenv instead of virtualenv
     # https://github.com/pyenv/pyenv-virtualenvwrapper#using-pyvenv-instead-of-virtualenv
-    # Dont forget to install virtualenvwrapper in the pyenv with `pyenv virtualenvwrapper`
     export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+    pyenv virtualenvwrapper
 fi
 
 debug_bash "done .bash_profile"
