@@ -98,6 +98,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# sqlite
+SQLITE_HOME="$(brew --prefix sqlite)"
+export PATH="$SQLITE_HOME/bin:$PATH"
+export LDFLAGS="-L$SQLITE_HOME/lib"
+export CPPFLAGS="-I$SQLITE_HOME/include"
+export PKG_CONFIG_PATH="$SQLITE_HOME/lib/pkgconfig"
+
 export PATH=/usr/local/opt/python/libexec/bin/:$PATH
 export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:$PATH
@@ -181,6 +188,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
     export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
     pyenv virtualenvwrapper
 fi
+
+# Flutter
+export FLUTTER_HOME=/Users/max/development/flutter
+export PATH=$PATH:$FLUTTER_HOME/bin 
 
 export ANDROID_HOME=/Users/max/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
