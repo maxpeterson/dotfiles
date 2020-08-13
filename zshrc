@@ -189,6 +189,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
     pyenv virtualenvwrapper
 fi
 
+# Android emulator
+export ANDROID_SDK=$HOME/Library/Android/sdk
+export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
+
 # Flutter
 export FLUTTER_HOME=/Users/max/development/flutter
 export PATH=$PATH:$FLUTTER_HOME/bin 
