@@ -16,6 +16,10 @@ function ssftp {
     (unset SSH_AUTH_SOCK; sftp $@)
 }
 
+function randomise {
+    echo  ${1:-{A..Z}} | tr -d ' ' | fold -w 1 | sort --random-sort;
+}
+
 # Django
 alias pm='python $([ -e manage.py ] && echo manage.py || echo */manage.py)'
 alias pmr='pm runserver_plus'
