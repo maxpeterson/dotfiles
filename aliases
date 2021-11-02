@@ -4,13 +4,9 @@ alias la='ls -A'
 
 alias l='less'
 alias h='history'
-alias n='mvim'
-alias mvimr='mvim --remote'
+alias n='nvim'
 alias pu=pushd
 alias po=popd
-
-
-alias git=hub
 
 function ssftp {
     (unset SSH_AUTH_SOCK; sftp $@)
@@ -41,7 +37,10 @@ alias junglediskunload='sudo launchctl unload -w /Library/LaunchDaemons/com.jung
 
 alias builddocx='for file in docs/src/*.md; do pandoc -s -S $file -o docs/docx/$(basename ${file%%.*}).docx; done'
 
-# Git utils 
+# Git utils
+
+alias git-delete-merged='git branch --merged| egrep -v "^\*|master|main|dev$" | xargs git branch -d'
+
 function git-authors {
     git log --format='%aN' | sort -u
 }

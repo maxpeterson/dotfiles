@@ -1,5 +1,7 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
+export PATH=$(python3 -m site --user-base)/bin:$(python -m site --user-base)/bin:$PATH
+export PATH=~/bin:~/scripts:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/max/.oh-my-zsh"
@@ -79,13 +81,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -98,28 +93,43 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+ARCH=$(arch)
+if [ "$ARCH" = "arm64" ]; then
+   iarch () { arch -x86_64 $@ }
+else
+   iarch () { $@ }
+   alias brew='/usr/local/bin/brew'
+fi
+
+alias ibrew='iarch /usr/local/bin/brew'
+alias ipip='iarch pip'
+
+
+IBREW_PREFIX=$(ibrew --prefix)
+IBREW_OPT=$IBREW_PREFIX/opt
+
+export PATH=$PATH:/usr/local/heroku/bin
+export PATH=$PATH:/usr/local/opt/python/libexec/bin/
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+#export CATALINA_HOME=/usr/local/tomcat6
 # sqlite
 SQLITE_HOME="$(brew --prefix sqlite)"
-export PATH="$SQLITE_HOME/bin:$PATH"
+export PATH="$PATH:$SQLITE_HOME/bin"
 export LDFLAGS="-L$SQLITE_HOME/lib"
 export CPPFLAGS="-I$SQLITE_HOME/include"
 export PKG_CONFIG_PATH="$SQLITE_HOME/lib/pkgconfig"
 
-export PATH=/usr/local/opt/python/libexec/bin/:$PATH
-export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-export PATH=/usr/local/heroku/bin:$PATH
-export PATH=~/bin:~/scripts:$PATH
+#export JAVA_HOME=$(/usr/libexec/java_home)
 
-#export CATALINA_HOME=/usr/local/tomcat6
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-# Required to fix compile error following Xcode upgrade to 5.1
-# clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
+## TODO: Figure out strategy for compiling arm64 vs x86_64
+##
+## Required to fix compile error following Xcode upgrade to 5.1
+## clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
 export CFLAGS=-Qunused-arguments
-export CPPFLAGS="-Qunused-arguments -I/usr/local/opt/zlib/include"
-export LDFLAGS="-L/usr/local/opt/zlib/lib"
-export LIBMEMCACHED=/usr/local
+#export CPPFLAGS="-Qunused-arguments -I$IBREW_OPT/zlib/include -I$IBREW_OPT/bzip2/include"
+#export LDFLAGS="-L$IBREW_OPT/zlib/lib -L$IBREW_OPT/bzip2/lib"
+export LIBMEMCACHED=$IBREW_PREFIX
 
 export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
 
@@ -162,7 +172,7 @@ export EDITOR=/usr/bin/vim
 
 # For PIP
 #export PIP_REQUIRE_VIRTUALENV=true
-export ARCHFLAGS="-arch i386 -arch x86_64"
+#export ARCHFLAGS="-arch i386 -arch x86_64"
 
 # Setup rbenv
 #eval "$(rbenv init -)"
@@ -174,13 +184,17 @@ export WORKON_HOME=~/Envs
 
 
 export NVM_DIR=~/.nvm
-. $(brew --prefix nvm)/nvm.sh
+. $IBREW_OPT/nvm/nvm.sh
 
 
 if [ -f "${HOME}/.iterm2_shell_integration.zsh" ]; then
     source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
+VIRTUALENVWRAPPER_PYTHON=$(which python3)
+
+# pyenv not yet working on Apple macOS Big Sur / Silicon
+# https://github.com/pyenv/pyenv/issues/1643
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
     # Using pyvenv instead of virtualenv
@@ -189,15 +203,13 @@ if command -v pyenv 1>/dev/null 2>&1; then
     pyenv virtualenvwrapper
 fi
 
-# Android emulator
-export ANDROID_SDK=$HOME/Library/Android/sdk
-export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
-
-# Flutter
-export FLUTTER_HOME=/Users/max/development/flutter
-export PATH=$PATH:$FLUTTER_HOME/bin 
-
-export ANDROID_HOME=/Users/max/Library/Android/sdk
+# Android
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platfrom-tools
+
+# Flutter
+export FLUTTER_HOME=$HOME/development/flutter
+export PATH=$PATH:$FLUTTER_HOME/bin
