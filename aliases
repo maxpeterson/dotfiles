@@ -344,10 +344,14 @@ changelog() {
             echo
             echo "## ${last:-CURRENT}"
             echo
-            git log "$last...$tag" --pretty=format:"* %s" --reverse | grep -v Merge;
+            while read number; do
+                echo "* #$number $(gh pr view "$number" | head -n 1 | sed -e 's/^title:\t//')"
+            done < <(git log --merges "$last...$tag" --pretty=format:"%s" --reverse | \
+               grep '^Merge pull request' | \
+               sed -e 's/^Merge pull request #\([0-9]*\).*$/\1/')
             last=$tag
         done < <(git tag | grep "^$first" | sort -r -t . -k 2 -n)
-    done < <(git tag | sed -e 's/^\(v[^.]*\)\..*/\1/' | sort -u -r)
+    done < <(git tag | grep '^\(v2\|deploy\)' | sort -u -r)
 }
 
 # Convert file to utf8 using vim

@@ -1,5 +1,5 @@
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=$(python3 -m site --user-base)/bin:$(python -m site --user-base)/bin:$PATH
 export PATH=~/bin:~/scripts:$PATH
 
@@ -213,3 +213,19 @@ export PATH=$PATH:$ANDROID_HOME/platfrom-tools
 # Flutter
 export FLUTTER_HOME=$HOME/development/flutter
 export PATH=$PATH:$FLUTTER_HOME/bin
+
+# Kubectl
+
+# Set the default kube context if present
+DEFAULT_KUBE_CONTEXTS="$HOME/.kube/config"
+if test -f "${DEFAULT_KUBE_CONTEXTS}"
+then
+  export KUBECONFIG="$DEFAULT_KUBE_CONTEXTS"
+fi
+
+# Additional contexts should be in ~/.kube/custom-contexts/ 
+CUSTOM_KUBE_CONTEXTS="$HOME/.kube/custom-contexts"
+mkdir -p "${CUSTOM_KUBE_CONTEXTS}"
+while read contextFile; do
+    export KUBECONFIG="$contextFile:$KUBECONFIG";
+done < <(find "${CUSTOM_KUBE_CONTEXTS}" -type f -name "*.yaml")
