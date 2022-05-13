@@ -1,6 +1,6 @@
 export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-export PATH=$(python3 -m site --user-base)/bin:$(python -m site --user-base)/bin:$PATH
+export PATH=$(python3 -m site --user-base)/bin:$PATH
 export PATH=~/bin:~/scripts:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -95,18 +95,20 @@ source $ZSH/oh-my-zsh.sh
 
 ARCH=$(arch)
 if [ "$ARCH" = "arm64" ]; then
-   iarch () { arch -x86_64 $@ }
+  iarch () { arch -x86_64 $@ }
 else
-   iarch () { $@ }
-   alias brew='/usr/local/bin/brew'
+  iarch () { $@ }
+  alias brew='/usr/local/bin/brew'
 fi
 
-alias ibrew='iarch /usr/local/bin/brew'
-alias ipip='iarch pip'
+IBREW_BIN=/usr/local/bin/brew
+if [ -e $IBREW_BIN ]; then
+  alias ibrew='iarch /usr/local/bin/brew'
+  alias ipip='iarch pip'
 
-
-IBREW_PREFIX=$(ibrew --prefix)
-IBREW_OPT=$IBREW_PREFIX/opt
+  IBREW_PREFIX=$(ibrew --prefix)
+  IBREW_OPT=$IBREW_PREFIX/opt
+fi
 
 export PATH=$PATH:/usr/local/heroku/bin
 export PATH=$PATH:/usr/local/opt/python/libexec/bin/
@@ -127,9 +129,11 @@ export PKG_CONFIG_PATH="$SQLITE_HOME/lib/pkgconfig"
 ## Required to fix compile error following Xcode upgrade to 5.1
 ## clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
 export CFLAGS=-Qunused-arguments
-#export CPPFLAGS="-Qunused-arguments -I$IBREW_OPT/zlib/include -I$IBREW_OPT/bzip2/include"
-#export LDFLAGS="-L$IBREW_OPT/zlib/lib -L$IBREW_OPT/bzip2/lib"
-export LIBMEMCACHED=$IBREW_PREFIX
+if [ -e $IBREW_BIN ]; then
+  export LIBMEMCACHED=$IBREW_PREFIX
+  # export CPPFLAGS="-Qunused-arguments -I$IBREW_OPT/zlib/include -I$IBREW_OPT/bzip2/include"
+  # export LDFLAGS="-L$IBREW_OPT/zlib/lib -L$IBREW_OPT/bzip2/lib"
+fi
 
 export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
 
@@ -184,8 +188,8 @@ export WORKON_HOME=~/Envs
 
 
 export NVM_DIR=~/.nvm
-. $IBREW_OPT/nvm/nvm.sh
-
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 if [ -f "${HOME}/.iterm2_shell_integration.zsh" ]; then
     source "${HOME}/.iterm2_shell_integration.zsh"
