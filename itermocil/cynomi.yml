@@ -1,0 +1,55 @@
+windows:
+  - name: Cynomi
+    root: ~/Projects
+    layout: 3_columns
+    panes:
+      # Row 1
+      - commands:
+        - cd backend
+        - npm run start:dev
+        name: backend
+      - commands:
+        - cd user-management
+        - npm run start:dev
+        name: user-management
+      - commands:
+        - cd questionnaires
+        - npm run start:dev
+        name: questionnaires
+      # Row 2
+      - commands:
+        - cd risk-scores
+        - npm run start:dev
+        name: risk-scores
+      - commands:
+        - cd casbin-sync
+        - npm run start:dev
+        name: casbin-sync
+      - commands:
+        - cd rule-engine
+        - npm run start:dev
+        name: rule-engine
+      # Row 3
+      - commands:
+        - cd content-management
+        - npm run start:dev
+        name: content-management
+      - commands:
+        - cd file-storage
+        - npm run start:dev
+        name: file-storage
+      - commands:
+        - cd dashboard
+        - npm run start
+        name: dashboard
+      # Row 4
+      - commands:
+        - cd content-transfer
+        - npm run start:dev
+        name: content-transfer
+      - commands:
+        - cd html-to-pdf
+        name: html-to-pdf
+      - commands:
+        - cd nestjs-helpers
+        name: nestjs-helpers
