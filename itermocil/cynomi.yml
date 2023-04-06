@@ -48,8 +48,8 @@ windows:
         - npm run start:dev
         name: content-transfer
       - commands:
-        - cd html-to-pdf
-        name: html-to-pdf
+        - cd assignees
+        name: assignees
       - commands:
-        - cd nestjs-helpers
+        - cd ~/Libs/nestjs-helpers
         name: nestjs-helpers
