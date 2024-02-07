@@ -1,0 +1,18 @@
+windows:
+  - name: Cynomi CMS
+    root: ~/Projects
+    layout: 3_columns
+    panes:
+      # Row 1
+      - commands:
+        - cd content-management
+        - npm run start:dev
+        name: content-management
+      - commands:
+        - cd content-transfer
+        - npm run start:dev
+        name: content-transfer
+      - commands:
+        - cd rule-engine
+        - npm run start:dev
+        name: rule-engine

@@ -10,13 +10,34 @@ windows:
         name: backend
       - commands:
         - cd user-management
-        - npm run start:dev
+        - ENABLE_CRON=false npm run start:dev
         name: user-management
       - commands:
         - cd questionnaires
         - npm run start:dev
         name: questionnaires
       # Row 2
+      - commands:
+        - cd dashboard
+        - npm run start
+        name: dashboard
+      - commands:
+        - cd findings
+        - npm run start:dev
+        name: findings
+      - commands:
+        - cd compliance
+        - npm run start:dev
+        name: compliance
+      # Row 3
+      - commands:
+        - cd file-storage
+        - npm run start:dev
+        name: file-storage
+      - commands:
+        - cd assignees
+        - npm run start:dev
+        name: assignees
       - commands:
         - cd risk-scores
         - npm run start:dev
@@ -25,31 +46,20 @@ windows:
         - cd casbin-sync
         - npm run start:dev
         name: casbin-sync
-      - commands:
-        - cd rule-engine
-        - npm run start:dev
-        name: rule-engine
-      # Row 3
-      - commands:
-        - cd content-management
-        - npm run start:dev
-        name: content-management
-      - commands:
-        - cd file-storage
-        - npm run start:dev
-        name: file-storage
-      - commands:
-        - cd dashboard
-        - npm run start
-        name: dashboard
       # Row 4
       - commands:
-        - cd content-transfer
+        - cd notifications
         - npm run start:dev
-        name: content-transfer
+        name: notifications
       - commands:
-        - cd assignees
-        name: assignees
+        - cd events
+        - npm run start:dev
+        name: events
       - commands:
-        - cd ~/Libs/nestjs-helpers
-        name: nestjs-helpers
+        - cd /opt/confluent/confluent-ksqldb-0.29.0
+        - sudo ksql-server-start ./etc/ksqldb/ksql-server.properties
+        name: ksqldb
+      - commands:
+        - cd ~/Libs/html-to-pdf
+        - echo npm run serve
+        name: html-to-pdf
