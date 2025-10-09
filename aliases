@@ -236,31 +236,19 @@ function bitbucketaddgrouppermission {
     #bitbucketaddprivilege $1 $2 ${3:-write} 'group-privileges' $4
 }
 
-alias activate='source bin/activate'
-alias virtualenvactivate='(virtualenv --no-site-packages .) && activate'
-alias activatebuildout='virtualenvactivate && (bin/python bootstrap.py) && (bin/buildout -N)'
-
-function rebuildvirtualenv {
-    project=${1}
-    python=${2:-$(which python)}
-    workon ${project}
-    deactivate
-    rmvirtualenv ${project}
-    mkvirtualenvv ${python} ${project}
-    setvirtualenvproject
-    pip install -r requirements.txt
-}
-
-function mkvirtualenvv {
-    python=${1:-python}
+mkvenv () {
+    python=${1:-python3}
     name=${2:-$(basename $(pwd))}
-    mkvirtualenv ${name} --python=$(which ${python})
-    setvirtualenvproject
+    venvpath=~/.venv/${name}
+    $(which ${python}) -m venv "${venvpath}"
+    echo "${venvpath}" > .venv
+    activate ${name}
 }
 
-alias mkvirtualenv3='mkvirtualenvv python3'
-
-alias workon.='workon $(basename $(pwd))'
+activate () {
+    name=${2:-$(basename $(pwd))}
+    source ~/.venv/${name}/bin/activate
+}
 
 function key-share {
     if [ "${1}" == "" ] ; then
@@ -358,3 +346,113 @@ changelog() {
 alias utf8='vim +"set nobomb | set fenc=utf8 | x"'
 
 alias password='base64 < /dev/random | tr -dc _a-z-0-9 | head -c24'
+
+alias nvim-old='XDG_CONFIG_HOME=~/.config/nvim-old nvim'
+alias nvim-config='XDG_DATA_HOME=~/.local/share/nvim-config XDG_CACHE_HOME=~/.config/nvim-config XDG_CONFIG_HOME=~/.config/nvim-config nvim'
+
+cynomi-switch() {
+  branch=${1:--}
+  for dir in ~/Projects/*; do
+    pushd $dir
+    if [[ $(git diff --stat) != '' ]]; then
+      echo "$dir has uncommited changes"
+    else
+      git co $branch
+      git pull | grep --quiet 'package.json'
+      if [ $? -eq 0 ] ; then
+        npm install
+        git checkout package-lock.json
+      fi
+    fi
+    popd
+  done
+}
+
+kubeconf() {
+  if [[ $# -lt 2 ]]; then
+    echo "syntax: kubeconfig <config_name> <command>"
+    return
+  fi
+  env KUBECONFIG="/Users/max/.kube/custom-contexts/$1.yaml" ${@:2}
+}
+
+jdiff() {
+  # Diff json files faster
+  # Uses python json.dump with sort_keys=True to fix ordering, then vimdiff
+
+  if [[ $# -ne 2 ]]; then
+    echo "syntax: jdiff file1 file2"
+    return
+  fi  
+
+  python3 -c "import json; json.dump(json.load(open('$1')), open('/tmp/jdiff.1', 'w'), indent=4, sort_keys=True)"
+  python3 -c "import json; json.dump(json.load(open('$2')), open('/tmp/jdiff.2', 'w'), indent=4, sort_keys=True)"
+  vimdiff /tmp/jdiff.{1,2}
+}
+
+version() {
+  if [[ $# -eq 0 ]]; then
+    echo "syntax: version <version> [branch] [base] [reviewer]"
+    return
+  fi
+  if [[ $# -eq 2 ]]; then
+    echo "syntax: version <version> [branch] [base] [reviewer]"
+    return
+  fi
+  version=$1 
+  branch=${2:-release}
+  base=${3:-main}
+  reviewer=${4:-@me}
+  
+  git co $branch && \
+  git pull && \
+  git diff origin/${base} --quiet || (\
+    git co -b "${version}" && \
+    npm version "${version}" && \
+    git push && \
+    git push --tags && \
+    pr-create "$version" "$branch" "${reviewer}" "Bump version to ${version}" \
+  )
+}
+
+pr-create() {
+  if [[ $# -lt 2 ]]; then
+    echo "syntax: pr-create <branch> <base> [reviewer] [title]"
+    return
+  fi
+  branch=$1
+  base=$2
+  reviewer=${3:-@me}
+  title=${4:-"Merge ${branch} into ${base}"}
+  
+  git co $branch && git pull && \
+  git rev-list -1 origin/${base}...${branch} | wc -l | grep -q 1 && \
+  gh pr create --assignee=@me -B $base -t "${title}" -b '' -r ${reviewer}; 
+}
+
+merge-ff() {
+  if [[ $# -ne 2 ]]; then
+    echo "syntax: merge-ff <branch> <base>"
+    return
+  fi
+  branch=$1
+  base=$2
+
+  git co ${branch} && \
+  git pull && \
+  git merge origin/${base} --ff-only \
+  && git push
+}
+
+for-projects() {
+  for dir in ~/Projects/*; do
+    echo "eval $@ in $dir";
+    eval "(cd $dir; $@ )";
+  done
+}
+
+get-branch() {
+  echo $(git rev-parse --abbrev-ref HEAD)
+}
+
+docker-compose() { docker compose $@ }

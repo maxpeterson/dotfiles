@@ -1,6 +1,9 @@
 export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
+export PATH=/opt/confluent/confluent-ksqldb-0.29.0/bin/:$PATH
+export PATH=/opt/homebrew/Cellar/jupyterlab/4.3.5/libexec/bin:$PATH
 export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=$(python3 -m site --user-base)/bin:$PATH
+export PATH=~/.local/bin:$PATH
 export PATH=~/bin:~/scripts:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -70,7 +73,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git virtualenvwrapper nvm rbenv)
+plugins=(git virtualenvwrapper nvm rbenv uv aws brew docker docker-compose kubectl iterm2 postgres python pip virtualenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -92,6 +95,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+fpath+=$(brew --prefix)/share/zsh/site-functions
+
 
 ARCH=$(arch)
 if [ "$ARCH" = "arm64" ]; then
@@ -118,11 +125,22 @@ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 # sqlite
 SQLITE_HOME="$(brew --prefix sqlite)"
 export PATH="$PATH:$SQLITE_HOME/bin"
-export LDFLAGS="-L$SQLITE_HOME/lib"
+export LDFLAGS="${LDFLAGS} -L$SQLITE_HOME/lib"
 export CPPFLAGS="-I$SQLITE_HOME/include"
 export PKG_CONFIG_PATH="$SQLITE_HOME/lib/pkgconfig"
 
-#export JAVA_HOME=$(/usr/libexec/java_home)
+LVM_HOME="$(brew --prefix llvm)"
+# export PATH="$PATH:${LVM_HOME}/bin"
+# export LDFLAGS="${LDFLAGS} -L${LVM_HOME}/lib"
+# export CPPFLAGS="${CFLAGS} -I${LVM_HOME}/include"
+export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:$LVM_HOME/lib:$LVM_HOME/lib/c++
+
+ZLIB_HOME="$(brew --prefix zlib)"
+# export LDFLAGS="${LDFLAGS} -L${ZLIB_HOME}/lib"
+# export CPPFLAGS="${CFLAGS} -I${ZLIB_HOME}/include"
+export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:$ZLIB_HOME/lib:
+
+export JAVA_HOME=$(/usr/libexec/java_home)
 
 ## TODO: Figure out strategy for compiling arm64 vs x86_64
 ##
@@ -135,7 +153,8 @@ if [ -e $IBREW_BIN ]; then
   # export LDFLAGS="-L$IBREW_OPT/zlib/lib -L$IBREW_OPT/bzip2/lib"
 fi
 
-export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
+# export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_LIBRARY_PATH
+export DYLD_FALLBACK_LIBRARY_PATH=/Applications/Postgres.app/Contents/Versions/latest/lib:$DYLD_FALLBACK_LIBRARY_PATH
 
 
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -248,18 +267,24 @@ export PATH=$PATH:$FLUTTER_HOME/bin
 
 # Kubectl
 
-# Set the default kube context if present
-DEFAULT_KUBE_CONTEXTS="$HOME/.kube/config"
-if test -f "${DEFAULT_KUBE_CONTEXTS}"
-then
-  export KUBECONFIG="$DEFAULT_KUBE_CONTEXTS"
-fi
+## Set the default kube context if present
+#DEFAULT_KUBE_CONTEXTS="$HOME/.kube/config"
+#if test -f "${DEFAULT_KUBE_CONTEXTS}"
+#then
+#  export KUBECONFIG="$DEFAULT_KUBE_CONTEXTS"
+#fi
 
-# Additional contexts should be in ~/.kube/custom-contexts/ 
-CUSTOM_KUBE_CONTEXTS="$HOME/.kube/custom-contexts"
-mkdir -p "${CUSTOM_KUBE_CONTEXTS}"
-while read contextFile; do
-    export KUBECONFIG="$contextFile:$KUBECONFIG";
-done < <(find "${CUSTOM_KUBE_CONTEXTS}" -type f -name "*.yaml")
+## Additional contexts should be in ~/.kube/custom-contexts/ 
+#CUSTOM_KUBE_CONTEXTS="$HOME/.kube/custom-contexts"
+#mkdir -p "${CUSTOM_KUBE_CONTEXTS}"
+#while read contextFile; do
+#    export KUBECONFIG="$contextFile:$KUBECONFIG";
+#done < <(find "${CUSTOM_KUBE_CONTEXTS}" -type f -name "*.yaml")
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/lib/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/lib/google-cloud-sdk/completion.zsh.inc'; fi

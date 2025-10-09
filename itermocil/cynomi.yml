@@ -39,27 +39,36 @@ windows:
         - npm run start:dev
         name: assignees
       - commands:
-        - cd risk-scores
+        - cd scores
         - npm run start:dev
-        name: risk-scores
-      - commands:
-        - cd casbin-sync
-        - npm run start:dev
-        name: casbin-sync
+        name: scores
       # Row 4
       - commands:
-        - cd notifications
+        - cd authorization
         - npm run start:dev
-        name: notifications
+        name: authorization
       - commands:
-        - cd events
+        - cd risks
         - npm run start:dev
-        name: events
+        name: risks
       - commands:
-        - cd /opt/confluent/confluent-ksqldb-0.29.0
-        - sudo ksql-server-start ./etc/ksqldb/ksql-server.properties
-        name: ksqldb
-      - commands:
-        - cd ~/Libs/html-to-pdf
-        - echo npm run serve
-        name: html-to-pdf
+        - cd report-service
+        - npm run start:dev
+        name: report-service
+       # Row 5
+       - commands:
+         - cd events
+         - npm run start:dev
+         name: events
+       - commands:
+         - cd notifications
+         - npm run start:dev
+         name: notifications
+       #- commands:
+       #  - cd /opt/confluent/confluent-ksqldb-0.29.0
+       #  - sudo ksql-server-start ./etc/ksqldb/ksql-server.properties
+       #  name: ksqldb
+       - commands:
+         - cd ~/Libs/html-to-pdf
+         - echo npm run serve
+         name: html-to-pdf

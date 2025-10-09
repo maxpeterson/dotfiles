@@ -9,10 +9,10 @@ windows:
         - npm run start:dev
         name: content-management
       - commands:
-        - cd content-transfer
-        - npm run start:dev
-        name: content-transfer
-      - commands:
         - cd rule-engine
         - npm run start:dev
         name: rule-engine
+      - commands:
+        - cd ~/Libs/html-to-pdf
+        - echo npm run serve
+        name: html-to-pdf

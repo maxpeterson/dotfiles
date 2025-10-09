@@ -1,4 +1,6 @@
 env.sh
+.bck.env
+.maint.env
 *.pyc
 *.swp
 .Python
@@ -18,3 +20,6 @@ client_media
 doc/tags
 .coverage
 .svn
+/node_modules*
+.env
+.venv
