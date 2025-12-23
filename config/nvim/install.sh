@@ -1,0 +1,1 @@
+../../../Personel/neovim-mini/install.sh
