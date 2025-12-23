@@ -8,6 +8,8 @@ alias n='nvim'
 alias pu=pushd
 alias po=popd
 
+alias nviml='nvim --listen ~/.cache/nvim/server.pipe'
+
 function ssftp {
     (unset SSH_AUTH_SOCK; sftp $@)
 }
