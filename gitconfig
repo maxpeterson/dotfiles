@@ -4,7 +4,7 @@
 
 [user]
     name = "Max Peterson"
-    email = mail@maxpeterson.co.uk
+	email = max@cynomi.com
 
 [alias]
     d = diff
@@ -46,7 +46,7 @@
 [github]
     user = maxpeterson
     name = Max Peterson
-    email = max@incuna.com
+	email = mail@maxpeterson.co.uk
 [heroku]
     account = incuna
 [push]
@@ -60,3 +60,6 @@
 	rebase = false
 [init]
 	defaultBranch = main
+[trace2]
+	eventTarget = af_unix:stream:/Users/max/.git-ai/internal/daemon/trace2.sock
+	eventNesting = 0

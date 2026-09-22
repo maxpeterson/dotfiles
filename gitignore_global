@@ -23,3 +23,9 @@ doc/tags
 /node_modules*
 .env
 .venv
+
+.obsidian/
+
+**/.claude/settings.local.json
+
+**/.claude/.cc-writes/
