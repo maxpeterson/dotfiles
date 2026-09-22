@@ -8,6 +8,8 @@ alias n='nvim'
 alias pu=pushd
 alias po=popd
 
+alias nviml='nvim --listen ~/.cache/nvim/server.pipe'
+
 function ssftp {
     (unset SSH_AUTH_SOCK; sftp $@)
 }
@@ -456,3 +458,7 @@ get-branch() {
 }
 
 docker-compose() { docker compose $@ }
+
+with-env() {
+  env $(grep -v '^#' .env | sed -e 's/ *= */=/'| xargs) $@
+}
