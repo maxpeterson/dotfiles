@@ -1,0 +1,53 @@
+windows:
+  - name: Cynomi Core
+    root: ~/Projects
+    layout: 3_columns
+    panes:
+      # Row 1
+      - commands:
+        - cd dashboard
+        - npm run start
+        name: dashboard
+      - commands:
+        - cd authorization
+        - npm run start:dev
+        name: authorization
+      - commands:
+        - cd users
+        - ENABLE_CRON=false npm run start:dev
+        name: users
+       # Row 3
+      - commands:
+         - cd events
+         - npm run start:dev
+        name: events
+      - commands:
+         - cd notifications
+         - npm run start:dev
+        name: notifications
+      - commands:
+         - cd aggregation
+         - npm run start:dev
+        name: aggregation
+      # Row 4
+      - commands:
+        - cd scores
+        - npm run start:dev
+        name: scores
+      - commands:
+        - cd file-storage
+        - npm run start:dev
+        name: file-storage
+      - commands:
+        - cd report-service
+        - npm run start:dev
+        name: report-service
+      # Row 4
+       #- commands:
+       #  - cd /opt/confluent/confluent-ksqldb-0.29.0
+       #  - sudo ksql-server-start ./etc/ksqldb/ksql-server.properties
+       #  name: ksqldb
+       #- commands:
+       #  - cd ~/Libs/html-to-pdf
+       #  - echo npm run serve
+       #  name: html-to-pdf

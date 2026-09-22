@@ -1,0 +1,45 @@
+windows:
+  - name: Cynomi Features
+    root: ~/Projects
+    layout: 3_columns
+    panes:
+      # Row 1
+      - commands:
+        - cd backend
+        - npm run start:dev
+        name: backend
+      - commands:
+        - cd questionnaires
+        - npm run start:dev
+        name: questionnaires
+      - commands:
+        - cd compliance
+        - npm run start:dev
+        name: compliance
+      # Row 2
+      - commands:
+        - cd findings
+        - npm run start:dev
+        name: findings
+      - commands:
+        - cd gluon
+        - python ./src/serve_local.py
+        name: gluon
+      - commands:
+        - cd risks
+        - npm run start:dev
+        name: risks
+      # Row 3
+      - commands:
+        - cd solutions
+        - npm run start:dev
+        name: file-storage
+      - commands:
+        - cd business-continuity
+        - npm run start:dev
+        name: business-continuity
+      - commands:
+        - cd assignees
+        - npm run start:dev
+        name: assignees
+

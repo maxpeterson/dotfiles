@@ -9,9 +9,9 @@ windows:
         - npm run start:dev
         name: backend
       - commands:
-        - cd user-management
+        - cd users
         - ENABLE_CRON=false npm run start:dev
-        name: user-management
+        name: users
       - commands:
         - cd questionnaires
         - npm run start:dev
@@ -56,19 +56,23 @@ windows:
         - npm run start:dev
         name: report-service
        # Row 5
-       - commands:
+      - commands:
          - cd events
          - npm run start:dev
-         name: events
-       - commands:
+        name: events
+      - commands:
          - cd notifications
          - npm run start:dev
-         name: notifications
+        name: notifications
+      - commands:
+         - cd aggregation
+         - npm run start:dev
+        name: aggregation
        #- commands:
        #  - cd /opt/confluent/confluent-ksqldb-0.29.0
        #  - sudo ksql-server-start ./etc/ksqldb/ksql-server.properties
        #  name: ksqldb
-       - commands:
-         - cd ~/Libs/html-to-pdf
-         - echo npm run serve
-         name: html-to-pdf
+       #- commands:
+       #  - cd ~/Libs/html-to-pdf
+       #  - echo npm run serve
+       #  name: html-to-pdf
