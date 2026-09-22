@@ -1,8 +1,8 @@
 export PATH=/opt/homebrew/sbin:/opt/homebrew/bin:$PATH
 export PATH=/opt/confluent/confluent-ksqldb-0.29.0/bin/:$PATH
 export PATH=/opt/homebrew/Cellar/jupyterlab/4.3.5/libexec/bin:$PATH
-export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 export PATH=$(python3 -m site --user-base)/bin:$PATH
+export PATH=~/.docker/bin:$PATH
 export PATH=~/.local/bin:$PATH
 export PATH=~/bin:~/scripts:$PATH
 
@@ -250,8 +250,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
     # Using pyvenv instead of virtualenv
     # https://github.com/pyenv/pyenv-virtualenvwrapper#using-pyvenv-instead-of-virtualenv
-    export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-    pyenv virtualenvwrapper
+    # export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+    # pyenv virtualenvwrapperali
 fi
 
 # Android
@@ -288,3 +288,31 @@ if [ -f '/usr/local/lib/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/lib
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/lib/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/lib/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by git-ai installer on Wed 17 Jun 2026 15:01:10 BST
+export PATH="/Users/max/.git-ai/bin:$PATH"
+
+# >>> kafka java env >>>
+# Kafka 4.x CLIs require Java 17+, but the global JAVA_HOME above resolves to
+# Java 11. Scope a newer JDK to the kafka-* tools only, leaving JAVA_HOME
+# untouched for everything else.
+export KAFKA_JAVA_HOME="/opt/homebrew/opt/openjdk"
+if [ -d "$KAFKA_JAVA_HOME" ] && [ -d /opt/homebrew/opt/kafka/bin ]; then
+  for _kafka_cmd in /opt/homebrew/opt/kafka/bin/kafka-*; do
+    alias "${_kafka_cmd:t}"="JAVA_HOME=$KAFKA_JAVA_HOME $_kafka_cmd"
+  done
+  unset _kafka_cmd
+fi
+# <<< kafka java env <<<
+
+# >>> cynomi mcp env >>>
+# Equivalent of the `claude --env` managed block (intune/claude-wrapper.zsh is not
+# installed on this machine). Exports the MCP API keys so ${VAR} placeholders in
+# .mcp.json expand. Remove this block if the wrapper is ever provisioned.
+export CYNOMI_ENV_FILE="/Users/max/Dev/agentic-development/.env"
+if [ -r "$CYNOMI_ENV_FILE" ]; then
+  set -a
+  source "$CYNOMI_ENV_FILE"
+  set +a
+fi
+# <<< cynomi mcp env <<<
